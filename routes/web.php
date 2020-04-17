@@ -13,6 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Home Page
+Route::get('/', 'AuthController@home');
+
+// Login and Logout
+Route::get('/login', ['middleware' => 'guest', 'uses' => 'AuthController@getLogin']);
+Route::post('/login', ['middleware' => 'guest', 'uses' => 'AuthController@postLogin']);
+Route::get('/logout', ['middleware' => 'auth', 'uses' => 'AuthController@logout']);
+
+// Route::get('/','TaskController@getAll');
+Route::get('/tasks', 'TaskController@getAll');
+Route::post('/create', 'TaskController@create');
+Route::delete('/delete/{id}','TaskController@delete');
+Route::get('/update/{id}','TaskController@getOne');
+Route::put('/update/{id}','TaskController@update');
